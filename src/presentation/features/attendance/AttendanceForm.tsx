@@ -1,5 +1,12 @@
 import type { ChangeEvent, FormEvent } from "react";
 import { useState } from "react";
+import { CheckCircle2, TriangleAlert } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import type { AttendanceRecord } from "@/domain/attendance/Attendance";
 import { useSaveAttendanceMutation } from "@/presentation/features/attendance/useSaveAttendanceMutation";
 
@@ -38,49 +45,104 @@ export function AttendanceForm() {
   }
 
   return (
-    <section className="panel stack">
-      <div>
-        <p className="eyebrow">Attendance Input</p>
-        <h2>勤怠入力</h2>
-      </div>
-      <form className="form-grid" onSubmit={handleSubmit}>
-        <label>
-          日付
-          <input name="date" type="date" value={form.date} onChange={handleChange} />
-        </label>
-        <label>
-          開始予定
-          <input name="scheduledStartAt" type="time" value={form.scheduledStartAt} onChange={handleChange} />
-        </label>
-        <label>
-          終了予定
-          <input name="scheduledEndAt" type="time" value={form.scheduledEndAt} onChange={handleChange} />
-        </label>
-        <label>
-          開始実績
-          <input name="actualStartAt" type="time" value={form.actualStartAt} onChange={handleChange} />
-        </label>
-        <label>
-          終了実績
-          <input name="actualEndAt" type="time" value={form.actualEndAt} onChange={handleChange} />
-        </label>
-        <label>
-          休憩
-          <input name="breakMinutes" type="number" min="0" value={form.breakMinutes} onChange={handleChange} />
-        </label>
-        <label className="full-span">
-          備考
-          <textarea name="note" rows={4} value={form.note} onChange={handleChange} />
-        </label>
-        <div className="full-span form-actions">
-          <button type="submit" disabled={mutation.isPending}>
-            {mutation.isPending ? "保存中..." : "保存する"}
-          </button>
-          {mutation.isSuccess && <p className="success-text">保存しました。</p>}
-          {mutation.isError && <p className="error-text">保存に失敗しました。</p>}
-        </div>
-      </form>
-    </section>
+    <Card>
+      <CardHeader>
+        <CardDescription>Attendance Input</CardDescription>
+        <CardTitle>勤怠入力</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form className="grid gap-6" onSubmit={handleSubmit}>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="space-y-2">
+              <Label htmlFor="date">日付</Label>
+              <Input id="date" name="date" type="date" value={form.date} onChange={handleChange} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="scheduledStartAt">開始予定</Label>
+              <Input
+                id="scheduledStartAt"
+                name="scheduledStartAt"
+                type="time"
+                value={form.scheduledStartAt}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="scheduledEndAt">終了予定</Label>
+              <Input
+                id="scheduledEndAt"
+                name="scheduledEndAt"
+                type="time"
+                value={form.scheduledEndAt}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="actualStartAt">開始実績</Label>
+              <Input
+                id="actualStartAt"
+                name="actualStartAt"
+                type="time"
+                value={form.actualStartAt}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="actualEndAt">終了実績</Label>
+              <Input
+                id="actualEndAt"
+                name="actualEndAt"
+                type="time"
+                value={form.actualEndAt}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="breakMinutes">休憩</Label>
+              <Input
+                id="breakMinutes"
+                min="0"
+                name="breakMinutes"
+                type="number"
+                value={form.breakMinutes}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="note">備考</Label>
+            <Textarea id="note" name="note" rows={4} value={form.note} onChange={handleChange} />
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-border/70 pt-4 xl:flex-row xl:items-start">
+            <Button disabled={mutation.isPending} type="submit">
+              {mutation.isPending ? "保存中..." : "保存する"}
+            </Button>
+
+            {mutation.isSuccess && (
+              <Alert className="border-emerald-200 bg-emerald-50 text-emerald-950 [&>svg]:text-emerald-600">
+                <CheckCircle2 />
+                <AlertTitle>保存完了</AlertTitle>
+                <AlertDescription>勤怠データを保存しました。</AlertDescription>
+              </Alert>
+            )}
+
+            {mutation.isError && (
+              <Alert className="bg-destructive/6" variant="destructive">
+                <TriangleAlert />
+                <AlertTitle>保存に失敗しました</AlertTitle>
+                <AlertDescription>入力内容を確認して再度お試しください。</AlertDescription>
+              </Alert>
+            )}
+          </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
-
