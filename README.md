@@ -22,10 +22,20 @@ src
 └─ shared           # 共通型、共通ユーティリティ
 ```
 
+## テスト
+
+- Test Runner: Vitest
+- UI Test: Testing Library
+- DOM Environment: jsdom
+
+```bash
+npm test
+npm run test:watch
+```
+
 ## 今後の実装候補
 
 - API クライアントの本実装
 - 認証フローの接続
 - 勤怠一覧・検索クエリの詳細化
 - テスト、Lint、CI の追加
-
