@@ -1,18 +1,22 @@
 import type { PropsWithChildren } from "react";
 import { NavLink } from "react-router-dom";
 import { Clock3, FileText, LayoutDashboard, UserRound } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { GlobalLoadingBar } from "@/presentation/components/GlobalLoadingBar";
+import { useI18n } from "@/shared/i18n/I18nProvider";
 
 const NAV_ITEMS = [
-  { to: "/", label: "ダッシュボード", icon: LayoutDashboard },
-  { to: "/attendance", label: "勤怠入力", icon: Clock3 },
-  { to: "/reports", label: "レポート", icon: FileText },
-  { to: "/login", label: "ログイン", icon: UserRound },
+  { to: "/", labelKey: "nav.dashboard", icon: LayoutDashboard },
+  { to: "/attendance", labelKey: "nav.attendance", icon: Clock3 },
+  { to: "/reports", labelKey: "nav.reports", icon: FileText },
+  { to: "/login", labelKey: "nav.login", icon: UserRound },
 ] as const;
 
 export function AppShell({ children }: PropsWithChildren) {
+  const { locale, setLocale, t } = useI18n();
+
   return (
     <div className="min-h-screen">
       <div className="mx-auto flex min-h-screen w-full max-w-[1600px] flex-col gap-5 p-4 lg:flex-row lg:p-6">
@@ -23,17 +27,15 @@ export function AppShell({ children }: PropsWithChildren) {
                 Workforce Manager
               </div>
               <div className="space-y-2">
-                <h1 className="text-2xl font-semibold tracking-tight">勤怠管理</h1>
-                <p className="text-sm leading-6 text-white/72">
-                  ログインユーザ、勤怠入力、レポートを一つの業務導線として整理します。
-                </p>
+                <h1 className="text-2xl font-semibold tracking-tight">{t("shell.title")}</h1>
+                <p className="text-sm leading-6 text-white/72">{t("shell.subtitle")}</p>
               </div>
             </div>
 
             <Separator className="my-6 bg-white/10" />
 
             <nav className="grid gap-2">
-              {NAV_ITEMS.map(({ to, label, icon: Icon }) => (
+              {NAV_ITEMS.map(({ to, labelKey, icon: Icon }) => (
                 <NavLink
                   key={to}
                   className={({ isActive }) =>
@@ -47,18 +49,44 @@ export function AppShell({ children }: PropsWithChildren) {
                   to={to}
                 >
                   <Icon className="size-4" />
-                  <span>{label}</span>
+                  <span>{t(labelKey)}</span>
                 </NavLink>
               ))}
             </nav>
 
+            <div className="mt-6 space-y-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">
+                {t("shell.language")}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  aria-pressed={locale === "ja"}
+                  className="rounded-full"
+                  onClick={() => setLocale("ja")}
+                  size="sm"
+                  type="button"
+                  variant={locale === "ja" ? "secondary" : "ghost"}
+                >
+                  {t("locale.ja")}
+                </Button>
+                <Button
+                  aria-pressed={locale === "en"}
+                  className="rounded-full"
+                  onClick={() => setLocale("en")}
+                  size="sm"
+                  type="button"
+                  variant={locale === "en" ? "secondary" : "ghost"}
+                >
+                  {t("locale.en")}
+                </Button>
+              </div>
+            </div>
+
             <div className="mt-auto rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">
-                Architecture
+                {t("shell.architecture")}
               </p>
-              <p className="mt-3 text-sm leading-6 text-white/78">
-                React / Zustand / React Query を Hexagonal Architecture 上に分離しています。
-              </p>
+              <p className="mt-3 text-sm leading-6 text-white/78">{t("shell.architectureDescription")}</p>
             </div>
           </div>
         </aside>

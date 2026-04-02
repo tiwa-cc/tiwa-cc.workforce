@@ -2,27 +2,26 @@ import { FileBarChart } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useI18n } from "@/shared/i18n/I18nProvider";
 
 export function ReportPageContent() {
+  const { t } = useI18n();
+
   return (
     <Card className="max-w-4xl">
       <CardHeader>
-        <CardDescription>Report</CardDescription>
+        <CardDescription>{t("report.description")}</CardDescription>
         <CardTitle className="flex items-center gap-2">
           <FileBarChart className="size-5 text-accent" />
-          レポート
+          {t("report.title")}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-5">
-        <p className="text-sm leading-7 text-muted-foreground">
-          検索クエリ、集計条件、出力形式はこれから定義します。今は `shadcn/ui` ベースの画面枠だけを先に整えています。
-        </p>
+        <p className="text-sm leading-7 text-muted-foreground">{t("report.body")}</p>
         <Separator />
         <Alert>
-          <AlertTitle>次の実装候補</AlertTitle>
-          <AlertDescription>
-            期間指定、社員絞り込み、勤怠異常抽出、CSV 出力などをここへ追加できます。
-          </AlertDescription>
+          <AlertTitle>{t("report.nextTitle")}</AlertTitle>
+          <AlertDescription>{t("report.nextDescription")}</AlertDescription>
         </Alert>
       </CardContent>
     </Card>

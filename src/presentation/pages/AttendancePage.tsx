@@ -4,8 +4,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { AppShell } from "@/presentation/components/AppShell";
 import { AttendanceForm } from "@/presentation/features/attendance/AttendanceForm";
 import { useAttendanceListQuery } from "@/presentation/features/attendance/useAttendanceListQuery";
+import { useI18n } from "@/shared/i18n/I18nProvider";
 
 export function AttendancePage() {
+  const { t } = useI18n();
   const { data, isLoading, isError } = useAttendanceListQuery();
 
   return (
@@ -13,8 +15,8 @@ export function AttendancePage() {
       <AttendanceForm />
       <Card>
         <CardHeader>
-          <CardDescription>Recent Records</CardDescription>
-          <CardTitle>保存済みレコード</CardTitle>
+          <CardDescription>{t("attendance.recentRecordsDescription")}</CardDescription>
+          <CardTitle>{t("attendance.recentRecordsTitle")}</CardTitle>
         </CardHeader>
         <CardContent>
           {isLoading && (
@@ -27,8 +29,8 @@ export function AttendancePage() {
 
           {isError && (
             <Alert variant="destructive">
-              <AlertTitle>レコード取得に失敗しました</AlertTitle>
-              <AlertDescription>勤怠一覧の取得でエラーが発生しました。</AlertDescription>
+              <AlertTitle>{t("attendance.listErrorTitle")}</AlertTitle>
+              <AlertDescription>{t("attendance.listErrorDescription")}</AlertDescription>
             </Alert>
           )}
 
@@ -45,7 +47,9 @@ export function AttendancePage() {
                   <p className="mt-3 text-lg font-semibold">
                     {record.actualStartAt} - {record.actualEndAt}
                   </p>
-                  <p className="mt-2 text-sm text-muted-foreground">休憩 {record.breakMinutes} 分</p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {t("attendance.breakMinutesValue", { minutes: record.breakMinutes })}
+                  </p>
                   {record.note ? <p className="mt-3 text-sm leading-6 text-foreground/80">{record.note}</p> : null}
                 </article>
               ))}

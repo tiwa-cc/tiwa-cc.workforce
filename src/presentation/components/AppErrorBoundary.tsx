@@ -3,12 +3,21 @@ import { Component } from "react";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useI18n } from "@/shared/i18n/I18nProvider";
 
 interface State {
   hasError: boolean;
 }
 
-export class AppErrorBoundary extends Component<{ children: ReactNode }, State> {
+interface AppErrorBoundaryInnerProps {
+  children: ReactNode;
+  description: string;
+  title: string;
+  reloadTitle: string;
+  reloadDescription: string;
+}
+
+class AppErrorBoundaryInner extends Component<AppErrorBoundaryInnerProps, State> {
   state: State = {
     hasError: false,
   };
@@ -27,14 +36,14 @@ export class AppErrorBoundary extends Component<{ children: ReactNode }, State> 
         <main className="flex min-h-screen items-center justify-center p-6">
           <Card className="w-full max-w-xl border-destructive/15 bg-card/90">
             <CardHeader>
-              <CardDescription>Application Error</CardDescription>
-              <CardTitle>予期しないエラーが発生しました</CardTitle>
+              <CardDescription>{this.props.description}</CardDescription>
+              <CardTitle>{this.props.title}</CardTitle>
             </CardHeader>
             <CardContent>
               <Alert variant="destructive">
                 <AlertCircle />
-                <AlertTitle>画面を再読み込みしてください</AlertTitle>
-                <AlertDescription>問題が続く場合は調査ログを確認してください。</AlertDescription>
+                <AlertTitle>{this.props.reloadTitle}</AlertTitle>
+                <AlertDescription>{this.props.reloadDescription}</AlertDescription>
               </Alert>
             </CardContent>
           </Card>
@@ -44,4 +53,19 @@ export class AppErrorBoundary extends Component<{ children: ReactNode }, State> 
 
     return this.props.children;
   }
+}
+
+export function AppErrorBoundary({ children }: { children: ReactNode }) {
+  const { t } = useI18n();
+
+  return (
+    <AppErrorBoundaryInner
+      description={t("error.application")}
+      reloadDescription={t("error.reloadDescription")}
+      reloadTitle={t("error.reloadTitle")}
+      title={t("error.unexpected")}
+    >
+      {children}
+    </AppErrorBoundaryInner>
+  );
 }

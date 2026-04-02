@@ -5,8 +5,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { AppShell } from "@/presentation/components/AppShell";
 import { useCurrentUserQuery } from "@/presentation/features/auth/useCurrentUserQuery";
 import { useAttendanceListQuery } from "@/presentation/features/attendance/useAttendanceListQuery";
+import { useI18n } from "@/shared/i18n/I18nProvider";
 
 export function DashboardPage() {
+  const { t } = useI18n();
   const userQuery = useCurrentUserQuery();
   const attendanceQuery = useAttendanceListQuery();
 
@@ -16,37 +18,28 @@ export function DashboardPage() {
         <CardContent className="grid gap-6 p-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)]">
           <div className="space-y-4">
             <div className="inline-flex w-fit items-center rounded-full border border-white/15 bg-white/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/75">
-              Dashboard
+              {t("dashboard.badge")}
             </div>
             <div className="space-y-3">
-              <h2 className="max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
-                Workforce Manager の基盤を shadcn/ui へ移行
-              </h2>
-              <p className="max-w-2xl text-sm leading-7 text-white/78">
-                ログインユーザ管理、勤怠入力、レポート画面を、Hexagonal Architecture の責務分離を崩さずに
-                `shadcn/ui` ベースの UI に載せ替えています。
-              </p>
+              <h2 className="max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">{t("dashboard.heroTitle")}</h2>
+              <p className="max-w-2xl text-sm leading-7 text-white/78">{t("dashboard.heroDescription")}</p>
             </div>
           </div>
 
           <div className="grid gap-4">
             <div className="rounded-[1.75rem] border border-white/12 bg-white/6 p-5 backdrop-blur">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">
-                State Layer
+                {t("dashboard.stateLayer")}
               </p>
-              <p className="mt-3 text-lg font-semibold">Zustand + React Query</p>
-              <p className="mt-2 text-sm leading-6 text-white/72">
-                UI 状態と API キャッシュを分離し、ローディングとエラー制御をコンポーネント側へ明示しています。
-              </p>
+              <p className="mt-3 text-lg font-semibold">{t("dashboard.stateLayerTitle")}</p>
+              <p className="mt-2 text-sm leading-6 text-white/72">{t("dashboard.stateLayerDescription")}</p>
             </div>
             <div className="rounded-[1.75rem] border border-white/12 bg-white/6 p-5 backdrop-blur">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">
-                UI System
+                {t("dashboard.uiSystem")}
               </p>
-              <p className="mt-3 text-lg font-semibold">shadcn/ui + Tailwind v4</p>
-              <p className="mt-2 text-sm leading-6 text-white/72">
-                Card、Input、Alert などの共通 UI を揃え、今後の画面追加を同じトーンで拡張できます。
-              </p>
+              <p className="mt-3 text-lg font-semibold">{t("dashboard.uiSystemTitle")}</p>
+              <p className="mt-2 text-sm leading-6 text-white/72">{t("dashboard.uiSystemDescription")}</p>
             </div>
           </div>
         </CardContent>
@@ -55,10 +48,10 @@ export function DashboardPage() {
       <section className="grid gap-4 xl:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardDescription>Current Session</CardDescription>
+            <CardDescription>{t("dashboard.currentSession")}</CardDescription>
             <CardTitle className="flex items-center gap-2">
               <UsersRound className="size-5 text-accent" />
-              ログインユーザ
+              {t("dashboard.currentUser")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -71,8 +64,8 @@ export function DashboardPage() {
 
             {userQuery.isError && (
               <Alert variant="destructive">
-                <AlertTitle>ユーザ取得に失敗しました</AlertTitle>
-                <AlertDescription>ログイン状態を確認して再読み込みしてください。</AlertDescription>
+                <AlertTitle>{t("dashboard.userErrorTitle")}</AlertTitle>
+                <AlertDescription>{t("dashboard.userErrorDescription")}</AlertDescription>
               </Alert>
             )}
 
@@ -80,7 +73,9 @@ export function DashboardPage() {
               <div className="space-y-2">
                 <p className="text-2xl font-semibold tracking-tight">{userQuery.data.name}</p>
                 <p className="text-sm text-muted-foreground">{userQuery.data.email}</p>
-                <p className="text-sm text-muted-foreground">社員コード: {userQuery.data.employeeCode}</p>
+                <p className="text-sm text-muted-foreground">
+                  {t("dashboard.employeeCode", { employeeCode: userQuery.data.employeeCode })}
+                </p>
               </div>
             )}
           </CardContent>
@@ -88,10 +83,10 @@ export function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardDescription>Attendance Summary</CardDescription>
+            <CardDescription>{t("dashboard.attendanceSummary")}</CardDescription>
             <CardTitle className="flex items-center gap-2">
               <Layers3 className="size-5 text-accent" />
-              勤怠レコード
+              {t("dashboard.attendanceRecords")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -104,15 +99,15 @@ export function DashboardPage() {
 
             {attendanceQuery.isError && (
               <Alert variant="destructive">
-                <AlertTitle>勤怠取得に失敗しました</AlertTitle>
-                <AlertDescription>モックデータの取得に失敗しています。</AlertDescription>
+                <AlertTitle>{t("dashboard.attendanceErrorTitle")}</AlertTitle>
+                <AlertDescription>{t("dashboard.attendanceErrorDescription")}</AlertDescription>
               </Alert>
             )}
 
             {attendanceQuery.data && (
               <div className="space-y-2">
                 <p className="text-3xl font-semibold tracking-tight">{attendanceQuery.data.length}</p>
-                <p className="text-sm text-muted-foreground">保存済みレコード件数</p>
+                <p className="text-sm text-muted-foreground">{t("dashboard.savedRecordCount")}</p>
               </div>
             )}
           </CardContent>
