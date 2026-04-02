@@ -52,7 +52,8 @@ docs
 ├─ api-design.md
 ├─ decisions.md
 ├─ state-machine.md
-└─ anomaly-detection.md
+├─ anomaly-detection.md
+└─ roadmap.md
 
 src
 ├─ app              # アプリ起動、Provider、Router
@@ -80,6 +81,7 @@ src
 - [Decisions](docs/decisions.md)
 - [State Machine](docs/state-machine.md)
 - [Anomaly Detection](docs/anomaly-detection.md)
+- [Roadmap](docs/roadmap.md)
 
 ## テスト
 
@@ -105,9 +107,7 @@ src
 
 ## 今後の実装候補
 
+- 詳細は [docs/roadmap.md](docs/roadmap.md) を参照
 - API クライアントの本実装
 - 認証フローの接続
-- 勤怠一覧・検索クエリの詳細化
 - 異常検知ルールの実装
-- テーブル、フィルタ、ダイアログなど UI の拡張
-- CI、カバレッジの追加
