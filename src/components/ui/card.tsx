@@ -18,6 +18,8 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
+  // The actual accessible content is always provided by callers via props.children.
+  // eslint-disable-next-line jsx-a11y/heading-has-content
   return <h3 className={cn("text-xl font-semibold tracking-tight", className)} {...props} />;
 }
 
@@ -34,4 +36,3 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };
-

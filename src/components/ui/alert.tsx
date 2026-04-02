@@ -27,6 +27,8 @@ function Alert({
 }
 
 function AlertTitle({ className, ...props }: React.ComponentProps<"h5">) {
+  // The actual accessible content is always provided by callers via props.children.
+  // eslint-disable-next-line jsx-a11y/heading-has-content
   return <h5 className={cn("mb-1 font-semibold tracking-tight", className)} {...props} />;
 }
 
@@ -35,4 +37,3 @@ function AlertDescription({ className, ...props }: React.ComponentProps<"div">) 
 }
 
 export { Alert, AlertDescription, AlertTitle };
-

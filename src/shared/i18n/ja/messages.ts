@@ -49,6 +49,7 @@ export const jaMessages = {
   "attendance.note": "備考",
   "attendance.submit": "保存する",
   "attendance.submitting": "保存中...",
+  "attendance.submittingStatus": "勤怠データを保存しています。",
   "attendance.saveSuccessTitle": "保存完了",
   "attendance.saveSuccessDescription": "勤怠データを保存しました。",
   "attendance.saveErrorTitle": "保存に失敗しました",
@@ -71,4 +72,3 @@ export const jaMessages = {
   "report.nextTitle": "次の実装候補",
   "report.nextDescription": "期間指定、社員絞り込み、勤怠異常抽出、CSV 出力などをここへ追加できます。",
 } as const;
-

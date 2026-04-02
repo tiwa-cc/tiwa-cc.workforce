@@ -51,6 +51,7 @@ export const enMessages: Record<keyof typeof jaMessages, string> = {
   "attendance.note": "Notes",
   "attendance.submit": "Save",
   "attendance.submitting": "Saving...",
+  "attendance.submittingStatus": "Saving the attendance record.",
   "attendance.saveSuccessTitle": "Saved",
   "attendance.saveSuccessDescription": "The attendance record has been saved.",
   "attendance.saveErrorTitle": "Failed to save",
@@ -74,4 +75,3 @@ export const enMessages: Record<keyof typeof jaMessages, string> = {
   "report.nextDescription":
     "Date range filters, employee filtering, attendance anomaly extraction, and CSV export can be added here.",
 };
-

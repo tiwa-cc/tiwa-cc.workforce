@@ -53,7 +53,13 @@ export function AttendanceForm() {
         <CardTitle>{t("attendance.inputTitle")}</CardTitle>
       </CardHeader>
       <CardContent>
-        <form className="grid gap-6" onSubmit={handleSubmit}>
+        <form
+          aria-busy={mutation.isPending}
+          aria-describedby="attendance-form-status"
+          aria-label={t("attendance.inputTitle")}
+          className="grid gap-6"
+          onSubmit={handleSubmit}
+        >
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             <div className="space-y-2">
               <Label htmlFor="date">{t("attendance.date")}</Label>
@@ -127,8 +133,22 @@ export function AttendanceForm() {
               {mutation.isPending ? t("attendance.submitting") : t("attendance.submit")}
             </Button>
 
+            <div
+              aria-atomic="true"
+              aria-live="polite"
+              className="sr-only"
+              id="attendance-form-status"
+              role="status"
+            >
+              {mutation.isPending ? t("attendance.submittingStatus") : ""}
+            </div>
+
             {mutation.isSuccess && (
-              <Alert className="border-emerald-200 bg-emerald-50 text-emerald-950 [&>svg]:text-emerald-600">
+              <Alert
+                aria-atomic="true"
+                aria-live="polite"
+                className="border-emerald-200 bg-emerald-50 text-emerald-950 [&>svg]:text-emerald-600"
+              >
                 <CheckCircle2 />
                 <AlertTitle>{t("attendance.saveSuccessTitle")}</AlertTitle>
                 <AlertDescription>{t("attendance.saveSuccessDescription")}</AlertDescription>
@@ -136,7 +156,7 @@ export function AttendanceForm() {
             )}
 
             {mutation.isError && (
-              <Alert className="bg-destructive/6" variant="destructive">
+              <Alert aria-atomic="true" className="bg-destructive/6" variant="destructive">
                 <TriangleAlert />
                 <AlertTitle>{t("attendance.saveErrorTitle")}</AlertTitle>
                 <AlertDescription>{t("attendance.saveErrorDescription")}</AlertDescription>

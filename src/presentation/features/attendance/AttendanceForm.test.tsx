@@ -15,8 +15,10 @@ describe("AttendanceForm", () => {
     await user.type(screen.getByLabelText("備考"), "顧客定例のため少し延長");
     await user.click(screen.getByRole("button", { name: "保存する" }));
 
+    expect(screen.getByRole("form")).toHaveAttribute("aria-busy", "true");
+    expect(screen.getByRole("status")).toHaveTextContent("勤怠データを保存しています。");
     expect(await screen.findByText("保存完了")).toBeInTheDocument();
+    expect(screen.getByRole("form")).toHaveAttribute("aria-busy", "false");
     expect(screen.getByText("勤怠データを保存しました。")).toBeInTheDocument();
   });
 });
-
