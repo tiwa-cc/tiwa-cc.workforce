@@ -48,6 +48,28 @@ save(record: AttendanceRecord): Promise<void>
 list(): Promise<AttendanceRecord[]>
 ```
 
+## 勤怠保存フロー
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Form as AttendanceForm
+    participant Mutation as useSaveAttendanceMutation
+    participant UseCase as saveAttendance
+    participant Repo as MockAttendanceRepository
+    participant Query as React Query
+
+    User->>Form: 保存する
+    Form->>Mutation: mutateAsync(record)
+    Mutation->>UseCase: saveAttendance(record)
+    UseCase->>Repo: save(record)
+    Repo-->>UseCase: saved
+    UseCase-->>Mutation: success
+    Mutation->>Query: invalidateQueries(attendance-records)
+    Query->>Repo: list()
+    Repo-->>Query: updated records
+```
+
 ## 想定 API エンドポイント
 
 ### ログインユーザ

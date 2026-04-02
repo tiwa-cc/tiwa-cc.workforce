@@ -26,6 +26,14 @@ idle
 - `success`: `query.data` を取得し、`useAuthStore.setCurrentUser()` を同期
 - `error`: 取得失敗時。画面ではエラー表示
 
+```mermaid
+stateDiagram-v2
+    [*] --> idle
+    idle --> loading: useCurrentUserQuery
+    loading --> success: data resolved
+    loading --> error: request failed
+```
+
 ## 勤怠一覧取得
 
 対象:
@@ -46,6 +54,14 @@ idle
 - `loading`: `attendanceRepository.list()` 実行中
 - `success`: 一覧を表示
 - `error`: 一覧取得失敗
+
+```mermaid
+stateDiagram-v2
+    [*] --> idle
+    idle --> loading: useAttendanceListQuery
+    loading --> success: records resolved
+    loading --> error: request failed
+```
 
 ## 勤怠保存
 
@@ -72,6 +88,22 @@ idle
 補足:
 
 - Mock Repository 側で短い待機時間を入れ、pending 状態を UI 上で確認できるようにしている
+
+```mermaid
+stateDiagram-v2
+    [*] --> idle
+    idle --> pending: submit
+    pending --> success: save resolved
+    pending --> error: save rejected
+    success --> idle: edit again
+    error --> pending: retry
+
+    note right of pending
+      submit disabled
+      aria-busy = true
+      aria-live = polite
+    end note
+```
 
 ## 画面ごとの UI 対応
 

@@ -5,6 +5,66 @@
 Workforce Manager は、勤怠管理の UI と業務ロジックを段階的に追加するために、Hexagonal Architecture を前提としたフロントエンド構成を採用している。
 現時点ではバックエンド未接続のため、Infrastructure 層は Mock Repository で代替している。
 
+## 全体構成図
+
+```mermaid
+flowchart LR
+    subgraph App["app"]
+        Main["main.tsx"]
+        Providers["AppProviders"]
+        Router["AppRouter"]
+    end
+
+    subgraph Presentation["presentation"]
+        Shell["AppShell"]
+        Pages["pages"]
+        Features["features"]
+    end
+
+    subgraph Core["application / domain"]
+        UseCases["usecases"]
+        Ports["ports"]
+        Domain["domain"]
+    end
+
+    subgraph Infrastructure["infrastructure"]
+        Repositories["Mock repositories"]
+        HttpClient["httpClient"]
+    end
+
+    subgraph Shared["shared"]
+        I18n["i18n"]
+        Utils["shared/lib"]
+    end
+
+    Main --> Providers --> Router --> Pages
+    Pages --> Shell
+    Pages --> Features
+    Features --> UseCases
+    UseCases --> Ports
+    UseCases --> Domain
+    Ports --> Repositories
+    Repositories -. future .-> HttpClient
+    Pages --> I18n
+    Features --> I18n
+    Pages --> Utils
+    Features --> Utils
+```
+
+## 画面形成フロー
+
+```mermaid
+flowchart TD
+    Main["main.tsx"] --> App["App.tsx"]
+    App --> Boundary["AppErrorBoundary"]
+    Boundary --> Router["AppRouter"]
+    Router --> Page["Page Component"]
+    Page --> Shell["AppShell"]
+    Page --> Feature["Feature Component"]
+    Feature --> Query["React Query / Zustand"]
+    Query --> Repository["Mock Repository"]
+```
+
 ## レイヤ構成
 
 ### `app`
