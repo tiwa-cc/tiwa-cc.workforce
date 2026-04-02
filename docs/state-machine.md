@@ -65,9 +65,13 @@ idle
 
 説明:
 
-- `pending`: 送信中。保存ボタンは disabled
+- `pending`: 送信中。保存ボタンは disabled。フォームに `aria-busy="true"` を付与し、live region で保存中メッセージを通知
 - `success`: 成功メッセージを表示し、`attendance-records` を invalidate
 - `error`: エラーメッセージを表示
+
+補足:
+
+- Mock Repository 側で短い待機時間を入れ、pending 状態を UI 上で確認できるようにしている
 
 ## 画面ごとの UI 対応
 
@@ -86,7 +90,7 @@ idle
 ### Attendance
 
 - 勤怠入力フォーム
-  - pending: ボタン disabled
+  - pending: ボタン disabled、`aria-busy=true`、保存中ステータスを `aria-live` で通知
   - success: 保存完了 Alert
   - error: 失敗 Alert
 
