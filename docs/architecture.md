@@ -2,7 +2,7 @@
 
 ## 目的
 
-Workforce Manager は、勤怠管理の UI と業務ロジックを段階的に育てるために、Hexagonal Architecture を前提としたフロントエンド構成を採用している。
+Workforce Manager は、勤怠管理の UI と業務ロジックを段階的に追加するために、Hexagonal Architecture を前提としたフロントエンド構成を採用している。
 現時点ではバックエンド未接続のため、Infrastructure 層は Mock Repository で代替している。
 
 ## レイヤ構成
