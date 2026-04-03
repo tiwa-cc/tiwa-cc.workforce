@@ -63,43 +63,27 @@
 - エラーメッセージ表示
 - `aria-invalid` と `aria-describedby` の追加
 
-## 優先度 Medium
+## 実装済み
 
-### 4. Vercel 公開向けの設定追加
+### Vercel 公開向け設定
 
-狙い:
+- `package.json` に `engines.node: "24.x"` を追加済み
+- `vercel.json` に SPA 用 rewrite を追加済み
+- 公開 URL を README に記載済み
 
-- デプロイ時の不整合を減らす
-- 公開先を想定したプロジェクト整備を明示する
+### GitHub Actions CI
 
-実装案:
-
-- `package.json` に `engines.node: "24.x"` を追加
-- `vercel.json` に SPA 用 rewrite を追加
-- README にデプロイ手順の要点を追記
-
-### 5. GitHub Actions による CI
-
-狙い:
-
-- `lint`、`test`、`build` が継続的に通ることを示す
-- ポートフォリオとして保守性を見せる
-
-実装案:
-
-- `push`
-- `pull_request`
-
-実行内容:
-
-- `npm ci`
-- `npm run lint`
-- `npm test -- --run`
-- `npm run build`
+- `develop` / `master` の `push` で実行
+- `develop` / `master` 向けの `pull_request` でも実行
+- 実行内容:
+  - `npm ci`
+  - `npm run lint`
+  - `npm test -- --run`
+  - `npm run build`
 
 ## 優先度 Low
 
-### 6. ユーザ情報画面の導線整理
+### 4. ユーザ情報画面の導線整理
 
 現状:
 
@@ -120,5 +104,3 @@
 1. レポート画面の最小実装
 2. Mock Repository の localStorage 永続化
 3. 勤怠入力の最小バリデーション
-4. Vercel 公開向け設定
-5. GitHub Actions CI
