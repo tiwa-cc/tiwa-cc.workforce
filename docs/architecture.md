@@ -2,7 +2,7 @@
 
 ## 目的
 
-Workforce Manager は、勤怠管理の UI と業務ロジックを段階的に追加するために、Hexagonal Architecture を前提としたフロントエンド構成を採用している。
+Workforce Manager は、勤怠管理の UI と業務ロジックを段階的に追加するために、Hexagonal Architecture を前提としたフロントエンド構成を採用している。  
 現時点ではバックエンド未接続のため、Infrastructure 層は Mock Repository で代替している。
 
 ## 全体構成図
@@ -158,7 +158,7 @@ flowchart TD
 - `ja/messages.ts`
 - `en/messages.ts`
 
-最小構成の l10n を Context ベースで提供している。
+最小構成の l10n を Context ベースで提供している。  
 現時点の対応言語は `ja` と `en`。
 
 ## 画面構成

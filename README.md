@@ -1,7 +1,18 @@
 # Workforce Manager
 
-Workforce Manager は、勤怠入力、ログインユーザ管理、レポートの基盤を持つ勤怠管理ポートフォリオです。
+## English Summary
+
+Workforce Manager is a frontend portfolio project for workforce management.  
+It is built with React, Zustand, React Query, and a Hexagonal Architecture approach.  
+The current scope includes user information, attendance input, and a report screen backed by mock repositories.
+
+Workforce Manager は、勤怠入力、ログインユーザ管理、レポートの基盤を持つ勤怠管理ポートフォリオです。  
 現在はモックデータを用いたフロントエンド先行開発段階で、Hexagonal Architecture を前提に UI、状態管理、API 境界、テスト基盤を先に整備しています。
+
+## 公開先
+
+- Demo: <https://tiwa-cc-workforce.vercel.app/>
+- Repository: <https://github.com/tiwa-cc/tiwa-cc.workforce>
 
 ## 採用方針
 
@@ -70,7 +81,7 @@ src
 ## 現在の画面構成
 
 - `/`: ダッシュボード
-- `/login`: ログインユーザ情報
+- `/login`: ユーザ情報
 - `/attendance`: 勤怠入力と保存済みレコード
 - `/reports`: レポート画面の受け皿
 
