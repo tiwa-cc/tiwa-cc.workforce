@@ -1,10 +1,8 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCurrentUser } from "@/application/usecases/getCurrentUser";
-import { MockAuthRepository } from "@/infrastructure/repositories/MockAuthRepository";
+import { authRepository } from "@/presentation/features/auth/authRepository";
 import { useAuthStore } from "@/presentation/features/auth/authStore";
-
-const authRepository = new MockAuthRepository();
 
 export function useCurrentUserQuery() {
   const setCurrentUser = useAuthStore((state) => state.setCurrentUser);
@@ -22,4 +20,3 @@ export function useCurrentUserQuery() {
 
   return query;
 }
-

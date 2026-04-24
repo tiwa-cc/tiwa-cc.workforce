@@ -102,6 +102,7 @@ flowchart TD
 現時点の UseCase:
 
 - `getCurrentUser`
+- `login`
 - `saveAttendance`
 
 ### `infrastructure`
@@ -115,6 +116,7 @@ flowchart TD
 - `MockAttendanceRepository`
 - `httpClient`
 
+`MockAuthRepository` は Demo 用の固定認証情報を持ち、認証状態を `localStorage` に保持する。  
 `httpClient` は本 API 接続時の共通 fetch ラッパとして先行配置しているが、現時点では Mock Repository が実際の画面データ供給を担当する。
 
 ### `presentation`
@@ -127,7 +129,7 @@ flowchart TD
 
 - `components/AppShell.tsx`: 共通レイアウト
 - `components/AppErrorBoundary.tsx`: 画面全体の例外捕捉
-- `features/auth/*`: ログインユーザ取得と Zustand 同期
+- `features/auth/*`: 認証リポジトリ参照、ログインユーザ取得、Zustand 同期
 - `features/attendance/*`: 勤怠入力と保存
 - `features/report/*`: レポート画面の受け皿
 
@@ -163,16 +165,21 @@ flowchart TD
 
 ## 画面構成
 
+- `/login`
+  - Demo 用ログイン画面
+  - 固定メールアドレス / パスワード入力
+  - 認証済みの場合は `/` へリダイレクト
 - `/`
   - ダッシュボード
   - ユーザ情報と勤怠件数の概要表示
-- `/login`
-  - ログインユーザ情報表示
+  - 未認証時は `/login` へリダイレクト
 - `/attendance`
   - 勤怠入力
   - 保存済みレコード表示
+  - 未認証時は `/login` へリダイレクト
 - `/reports`
   - レポート画面のプレースホルダ
+  - 未認証時は `/login` へリダイレクト
 
 ## 状態管理方針
 
@@ -186,6 +193,8 @@ flowchart TD
 
 - `["current-user"]`
 - `["attendance-records"]`
+
+`["current-user"]` は認証済みユーザだけでなく未認証時の `null` も扱い、Router の保護ルート判定に利用する。
 
 ### Zustand
 
@@ -201,6 +210,7 @@ flowchart TD
 ### 最小 a11y 対応
 
 - JSX の静的検査に `eslint-plugin-jsx-a11y` を利用
+- ログイン画面は `label` と `input` を関連付けて入力可能にする
 - 勤怠保存中はフォームに `aria-busy` を付与
 - 保存中メッセージは `role="status"` と `aria-live="polite"` で通知
 - 成功 / 失敗通知は `Alert` コンポーネントで表示
@@ -216,6 +226,7 @@ flowchart TD
 ## 今後の拡張ポイント
 
 - Repository を Mock 実装から実 API 実装へ差し替え
+- Demo 認証を本番認証基盤へ差し替え
 - Domain 層へ値オブジェクトや検証ルールを追加
 - レポート画面の検索条件と集計軸を定義
 - 異常検知ルールを Application 層または Domain Service として実装

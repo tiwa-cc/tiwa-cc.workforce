@@ -72,6 +72,27 @@ sequenceDiagram
 
 ## 想定 API エンドポイント
 
+### ログイン
+
+- `POST /api/auth/login`
+
+想定リクエスト:
+
+```json
+{
+  "email": "taro@example.com",
+  "password": "demo1234"
+}
+```
+
+想定レスポンス:
+
+```json
+{
+  "authenticated": true
+}
+```
+
 ### ログインユーザ
 
 - `GET /api/auth/me`
@@ -86,6 +107,10 @@ sequenceDiagram
   "email": "taro@example.com"
 }
 ```
+
+未認証時:
+
+- `401 Unauthorized`
 
 ### 勤怠一覧
 

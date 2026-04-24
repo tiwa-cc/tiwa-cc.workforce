@@ -10,28 +10,68 @@
 
 - `useCurrentUserQuery`
 - `useAuthStore`
+- `AppRouter`
 
 状態:
 
 ```text
 idle
   -> loading
-  -> success
+  -> authenticated
+  -> guest
   -> error
 ```
 
 説明:
 
 - `loading`: `getCurrentUser()` 実行中
-- `success`: `query.data` を取得し、`useAuthStore.setCurrentUser()` を同期
+- `authenticated`: `query.data` にユーザを取得し、`useAuthStore.setCurrentUser()` を同期
+- `guest`: `query.data === null`。保護ルートでは `/login` へ遷移
 - `error`: 取得失敗時。画面ではエラー表示
 
 ```mermaid
 stateDiagram-v2
     [*] --> idle
     idle --> loading: useCurrentUserQuery
-    loading --> success: data resolved
+    loading --> authenticated: user resolved
+    loading --> guest: null resolved
     loading --> error: request failed
+```
+
+補足:
+
+- `/login` では `authenticated` の場合に `/` へ戻す
+- `/` `/attendance` `/reports` では `guest` の場合に `/login` へ戻す
+
+## ログイン送信
+
+対象:
+
+- `LoginPage`
+- `login`
+
+状態:
+
+```text
+idle
+  -> pending
+  -> success
+  -> error
+```
+
+説明:
+
+- `pending`: ログイン送信中。送信ボタンは disabled、フォームに `aria-busy="true"` を付与
+- `success`: `current-user` を更新して `/` へ遷移
+- `error`: 認証エラーを Alert で表示
+
+```mermaid
+stateDiagram-v2
+    [*] --> idle
+    idle --> pending: submit
+    pending --> success: login resolved
+    pending --> error: login rejected
+    error --> pending: retry
 ```
 
 ## 勤怠一覧取得
@@ -134,7 +174,9 @@ stateDiagram-v2
 ### Login
 
 - loading: Skeleton
-- success: ユーザ情報表示
+- idle: メールアドレス / パスワード入力
+- pending: 送信ボタン disabled、`aria-busy=true`
+- success: ダッシュボードへ遷移
 - error: Alert
 
 ### Report

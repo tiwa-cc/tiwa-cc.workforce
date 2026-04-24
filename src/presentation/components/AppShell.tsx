@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
 import { NavLink } from "react-router-dom";
-import { Clock3, FileText, LayoutDashboard, UserRound } from "lucide-react";
+import { Clock3, FileText, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
@@ -11,7 +11,6 @@ const NAV_ITEMS = [
   { to: "/", labelKey: "nav.dashboard", icon: LayoutDashboard },
   { to: "/attendance", labelKey: "nav.attendance", icon: Clock3 },
   { to: "/reports", labelKey: "nav.reports", icon: FileText },
-  { to: "/login", labelKey: "nav.login", icon: UserRound },
 ] as const;
 
 export function AppShell({ children }: PropsWithChildren) {
