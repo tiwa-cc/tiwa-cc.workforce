@@ -1,8 +1,36 @@
+# Miscellaneous
+.DS_Store
+*.log
+tmp/
+.tmp/
+*.swp
+.build/
+.buildlog/
+.history
+.svn/
+
+# Local AI assistant files
+.codex
+.cursor/
+.cursorrules
+.copilot/
+.claude/
+.continue/
+.windsurf/
+.roo/
+.codeium/
+.gemini/
+
+.env
+.env.*
+!.env.example
+
+.vscode/
+
 node_modules/
 dist/
 coverage/
 *.tsbuildinfo
-.DS_Store
 .idea/
 .vscode/
 *.log
